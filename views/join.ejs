@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Join</title>
+    <style>
+      .messages{
+        color : blue;
+        margin-bottom : 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Join my website!</h1>
+    <section class="messages"><%=message%></section>
+    <form action="/join" method="post">
+      email : <input type="text" name="email" value="">
+      password : <input type="text" name="password" value="">
+      <input type="submit">
+    </form>
+
+  </body>
+</html>

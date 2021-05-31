@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>email form</title>
+  </head>
+  <body>
+
+    <form class="" action="/email/form" method="post"> <!--보낼 곳이 action
+      /*post는 get과 다르게 url로 담겨오는 것이 아님.. get은 보안 위험성.. */ -->
+      email : <input type="text" name="email" value=""><br>
+      <input type="submit">
+    </form>
+
+    <button class="ajaxsend">ajaxsend</button>
+
+    <div class="result"></div>
+
+    <script>
+      document.querySelector('.ajaxsend').addEventListener('click', function()
+      {
+        var inputdata = document.forms[0].elements[0].value;
+        sendAjax('http://localhost:3000/email/ajax', inputdata); //CORS 떄문에 애먹음.. 출처 모양의 스킴, 호스트, 포트 아예 일치 시켜줘야 한다.
+      })//클릭하면 form의 1번쨰인 요소인 inputdata를 보내기
+
+      function sendAjax(url,data)
+      {
+        var data = {'email' : data};
+        data = JSON.stringify(data); //문자열로 바꾸기
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-Type', "application/json"); //서버로 보낼 떄 json 형태로
+        xhr.send(data);
+
+        xhr.addEventListener('load', function(){ //잘 로드 되면 띄우기
+
+          var result = JSON.parse(xhr.responseText);
+          var resultDiv = document.querySelector(".result");
+          if(result.result !== "ok")
+            resultDiv.innerHTML = "your email is not found";
+          else
+            resultDiv. innerHTML = result.name;
+        });
+      }
+    </script>
+  </body>
+</html>
